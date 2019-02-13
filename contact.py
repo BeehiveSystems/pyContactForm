@@ -11,15 +11,16 @@ app = Flask(__name__)
 app.secret_key = b''
 
 app.config.update(dict(
-    MAIL_SERVER = 'smtp.gmail.com',
-    MAIL_PORT = 587,
-    MAIL_USE_TLS =  True,
-    MAIL_USE_SSL = False,
-    MAIL_USERNAME = config.credentials["email_address"],
-    MAIL_PASSWORD = config.credentials["password"]
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=587,
+    MAIL_USE_TLS=True,
+    MAIL_USE_SSL=False,
+    MAIL_USERNAME=config.credentials["email_address"],
+    MAIL_PASSWORD=config.credentials["password"]
 ))
 
 mail = Mail(app)
+
 
 @app.route("/email", methods=["GET", "POST"])
 def send_email():
@@ -29,9 +30,10 @@ def send_email():
         subject = request.form.get('subject') + ' from ' + guest_addr
         name = request.form.get('name')
         msg = Message(subject, sender=guest_addr, recipients=config.destination["recipient"], reply_to=guest_addr)
-        msg.body = message + '\n\n From: %s' % guest_addr
+        msg.body = message + '\n\n From: %s at %s' % name, guest_addr
         mail.send(msg)
     return redirect(config.redirect["redirect"])
 
+
 if __name__ == '__main__':
-    app.run(debug = False)
+    app.run(debug=False)
