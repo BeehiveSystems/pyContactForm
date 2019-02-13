@@ -8,7 +8,7 @@ Python backend for HTML contact form.
 
 - Generate a secret key and input it in contact.py
 
-  - python3 -c "import secrets; print(secrets.token_hex(16))"
+  - Hint, use this command: python3 -c "import secrets; print(secrets.token_hex(16))"
 
 - Enter your email credentials in config.py
 
